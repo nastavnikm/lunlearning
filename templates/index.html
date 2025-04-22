@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <title>Lune Learning</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Dobrodošli na LuneLearning!</h1>
+    </div>
+    <div class="kajron">
+        <marquee behavior="scroll" direction="left">
+            {% for message in messages %}
+                {{ message }} &nbsp;&nbsp;&nbsp;&nbsp;
+            {% endfor %}
+        </marquee>
+    </div>
+</body>
+</html>
