@@ -1,28 +1,45 @@
-/* Stilizovanje kajrona */
+/* Podesite osnovni stil stranice */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Stil za kajron */
 .kajron {
+    position: fixed; /* Fiksira kajron na dno stranice */
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Traka zauzima celu širinu ekrana */
     background-color: #333; /* Tamna pozadina */
     color: white; /* Bela boja teksta */
-    overflow: hidden; /* Sakriva sadržaj koji prelazi */
-    position: relative;
-    padding: 10px 0; /* Padding */
+    text-align: center;
+    padding: 10px 0; /* Prostor unutar trake */
+    z-index: 1000; /* Osigurava da kajron bude iznad drugih elemenata */
+    overflow: hidden; /* Skriva višak sadržaja */
 }
 
+/* Stil za sadržaj unutar kajrona */
 .kajron-content {
-    white-space: nowrap; /* Sprečava prelazak u novi red */
-    display: inline-block;
-    animation: scroll 10s linear infinite; /* Animacija za pomeranje */
+    display: flex;
+    white-space: nowrap; /* Sprečava prelazak teksta u novi red */
+    animation: marquee 15s linear infinite; /* Animacija za pomeranje teksta */
 }
 
-/* Animacija za pomeranje */
-@keyframes scroll {
+/* Animacija za pomeranje teksta */
+@keyframes marquee {
     0% {
-        transform: translateX(100%);
+        transform: translateX(100%); /* Početna pozicija sa desne strane */
     }
     100% {
-        transform: translateX(-100%);
+        transform: translateX(-100%); /* Završna pozicija sa leve strane */
     }
 }
 
 .kajron-content span {
-    margin-right: 30px; /* Razmak između poruka */
+    font-size: 16px;
+    padding-right: 50px; /* Razmak između poruka */
 }
