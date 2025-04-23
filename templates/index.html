@@ -2,30 +2,145 @@
 <html lang="sr">
 <head>
     <meta charset="UTF-8">
-    <title>Lune Learning</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vesti</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Gornja traka - crna pozadina sa dugmadi */
+        #top-bar {
+            background-color: #000;
+            padding: 10px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Stilizacija dugmadi u gornjoj traci */
+        #top-bar button {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #top-bar button:hover {
+            background-color: #555;
+        }
+
+        /* Kajron za vesti */
+        #news-marquee {
+            width: 100%;
+            position: fixed;
+            bottom: 40px; /* Pomeriti kajron na dno stranice */
+            background: black;
+            color: white;
+            padding: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 16px;
+            z-index: 999;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #news-marquee span {
+            display: inline-block;
+            padding-right: 50px;
+        }
+
+        #footer-buttons {
+            margin-top: auto;
+            text-align: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigacija na vrhu -->
-    <nav class="navbar">
-        <a href="#">Istraživanja</a>
-        <a href="#">CNC Chatbot</a>
-        <a href="#">Opcija 3</a>
-        <a href="#">Opcija 4</a>
-    </nav>
 
-    <!-- Glavni sadržaj -->
-    <div class="content">
-        <h1>Dobrodošli na LunELearning!</h1>
-    </div>
+<!-- Gornja traka sa dugmadi -->
+<div id="top-bar">
+    <button onclick="window.location.href='/istrazivanja'">Istraživanja</button>
+    <button onclick="window.location.href='/cnc'">CNC</button>
+    <button onclick="window.location.href='/chatbot'">Chatbot</button>
+    <button onclick="window.location.href='/opcija3'">Opcija 3</button>
+    <button onclick="window.location.href='/opcija4'">Opcija 4</button>
+</div>
 
-    <!-- Horizontalna traka (kajron) na dnu -->
-    <div class="kajron">
-        <div class="kajron-content">
-            <span>Dobrodošli na naš sajt! &nbsp;&nbsp;&nbsp;</span>
-            <span>Ovdje možete učiti i napredovati! &nbsp;&nbsp;&nbsp;</span>
-            <span>Prijavite se i počnite sa učenjem danas! &nbsp;&nbsp;&nbsp;</span>
-        </div>
-    </div>
+<!-- Kajron za vesti -->
+<div id="news-marquee">
+    <span id="news-content"></span>
+</div>
+
+<!-- Dugmadi za sajtove premesteni na dno stranice -->
+<div id="footer-buttons">
+    <button onclick="getNews(['B92'])">B92</button>
+    <button onclick="getNews(['RTS'])">RTS</button>
+</div>
+
+<script>
+    function getNews(sites) {
+        fetch('/get_news', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ sites: sites })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const newsContent = document.getElementById('news-content');
+            newsContent.innerHTML = ''; // Clear previous news
+
+            if (data.length > 0) {
+                data.forEach(news => {
+                    const span = document.createElement('span');
+                    span.textContent = news;
+                    newsContent.appendChild(span);
+                });
+
+                // Start the news scroll
+                scrollNews();
+            }
+        })
+        .catch(error => console.error('Error fetching news:', error));
+    }
+
+    function scrollNews() {
+        const newsContent = document.getElementById('news-content');
+        const newsWidth = newsContent.offsetWidth;
+        const containerWidth = document.getElementById('news-marquee').offsetWidth;
+
+        let currentPos = containerWidth;
+        const scrollSpeed = 2;
+
+        function animate() {
+            currentPos -= scrollSpeed;
+            if (currentPos <= -newsWidth) {
+                currentPos = containerWidth; // Reset position
+            }
+
+            newsContent.style.transform = `translateX(${currentPos}px)`;
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    }
+</script>
+
 </body>
 </html>

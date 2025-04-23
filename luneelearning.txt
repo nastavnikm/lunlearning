@@ -3,5 +3,5 @@ https://luneelearning.onrender.com
 
 git config --global core.autocrlf true
 git add .
-git commit -m "Dodavanje kajrona sa tekstom"
+git commit -m "Dodavanje kajrona sa tekstom/button"
 git push origin master

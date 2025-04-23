@@ -1,11 +1,83 @@
-/* Podesite osnovni stil stranice */
+/* Osnovne postavke za stranicu */
 body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+/* Gornja traka sa opcijama */
+.top-options {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.top-options a {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+/* Selekcija sajtova */
+.bottom-options {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.bottom-options label {
+    margin: 0 10px;
+}
+
+/* Kajron stil */
+.kajron {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 0; /* Povećana visina kajrona */
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    animation: scroll-text 15s linear infinite; /* Usporeni skrol */
+}
+
+.kajron-content {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes scroll-text {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Potvrdi dugme */
+.confirm-button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.confirm-button:hover {
+    background-color: #555;
 }
 
 /* Navigacija na vrhu */
@@ -19,7 +91,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 999;
 }
 
 .navbar a {
@@ -37,49 +109,8 @@ body {
     color: black;
 }
 
-/* Glavni sadržaj */
-.content {
-    margin-top: 80px; /* Da ne ide ispod navigacije */
-    margin-bottom: 60px; /* Da ne ide preko kajrona */
-    flex: 1; /* Sadržaj se rasteže izmedju navbar-a i kajrona */
+/* Podesi razmak od navigacije do sadržaja */
+.container {
+    margin-top: 80px;
     text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-/* Kajron na dnu */
-.kajron {
-    width: 100%;
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 999;
-}
-
-.kajron-content {
-    display: flex;
-    white-space: nowrap;
-    animation: marquee 15s linear infinite;
-}
-
-.kajron-content span {
-    font-size: 16px;
-    padding-right: 50px;
-}
-
-/* Animacija pomeranja teksta */
-@keyframes marquee {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
 }
