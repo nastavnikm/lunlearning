@@ -1,1 +1,7 @@
 https://luneelearning.onrender.com
+
+
+git config --global core.autocrlf true
+git add .
+git commit -m "Dodavanje kajrona sa tekstom"
+git push origin master
