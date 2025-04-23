@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 from bs4 import BeautifulSoup
+from chatbot.chatbot import get_answer  # <-- dodato za chatbot
 
 app = Flask(__name__)
 
-
+# Funkcija za skidanje vesti sa B92
 def get_b92_news():
     url = "https://www.b92.net/najnovije-vesti"
     headers = {
@@ -31,12 +32,12 @@ def get_b92_news():
 
     return vesti
 
-
+# Home ruta
 @app.route("/")
 def home():
     return render_template("index.html")
 
-
+# Ruta za vesti
 @app.route("/get_news", methods=["POST"])
 def get_news():
     data = request.json
@@ -46,12 +47,18 @@ def get_news():
     if "B92" in sites:
         sve_vesti.extend(get_b92_news())
 
-    # Dodaj RTS, N1 i druge sajtove ako je potrebno
-    # if "RTS" in sites:
-    #     sve_vesti.extend(get_rts_news())
+    # Ovde možeš kasnije dodati i ostale izvore (RTS, N1...)
 
     return jsonify(sve_vesti)
 
+# Chatbot ruta
+@app.route("/chatbot", methods=["GET", "POST"])
+def chatbot():
+    if request.method == "POST":
+        user_message = request.json.get("message")
+        response = get_answer(user_message)
+        return jsonify({"response": response})
+    return render_template("chatbot.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
